@@ -334,9 +334,8 @@ public class VideoCaptureActivity extends AppCompatActivity {
         }
 
         checkAndRequestStoragePermission();
-        if (Build.VERSION.SDK_INT >= 23) {
-            insertDummyContactWrapper();
-        }
+        insertDummyContactWrapper();
+
 
         /*String filePath = "/storage/emulated/0/Movies/CameraX-Video/bigfile.mp4";
         File file = new File(filePath);
