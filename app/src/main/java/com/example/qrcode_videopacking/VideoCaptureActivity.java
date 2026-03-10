@@ -336,6 +336,23 @@ public class VideoCaptureActivity extends AppCompatActivity {
         checkAndRequestStoragePermission();
         insertDummyContactWrapper();
 
+        String filePath = "/storage/emulated/0/Movies/CameraX-Video";
+        File directory = new File(filePath);
+        // Check if the directory exists and is actually a directory
+        if (directory.exists() && directory.isDirectory()) {
+            // Get all files and directories in the directory
+            File[] files = directory.listFiles();
+
+            if (files != null) {
+                // Iterate over the results and add only directories to the list
+                for (File file : files) {
+                    //if (file.isDirectory()) {
+                        Log.d("LISTDIR", file.getName());   
+                    //}
+                }
+            }
+        }
+
 
         /*String filePath = "/storage/emulated/0/Movies/CameraX-Video/bigfile.mp4";
         File file = new File(filePath);
@@ -601,6 +618,8 @@ public class VideoCaptureActivity extends AppCompatActivity {
 
                         if (ReturnCode.isSuccess(session.getReturnCode())) {
                             // Compression successful
+                            //file.delete();  //delete original file
+
                             total_file_compressed--;
 
                             runOnUiThread(new Runnable() {
@@ -615,8 +634,8 @@ public class VideoCaptureActivity extends AppCompatActivity {
                             });
                             int lastSpaceIndex = session.getCommand().lastIndexOf(" ");
                             String output_file = session.getCommand().substring(lastSpaceIndex + 1);
-                            File file          = new File(output_file);
-                            Uri mFileCompress  = Uri.fromFile(file);
+                            File fileCompress  = new File(output_file);
+                            Uri mFileCompress  = Uri.fromFile(fileCompress);
                             uploadChuckFile_(mFileCompress, 0, qrcode, index_of_file);
 
                         } else if (ReturnCode.isCancel(session.getReturnCode())) {
@@ -780,7 +799,7 @@ public class VideoCaptureActivity extends AppCompatActivity {
                                         if(hideDialog) panelUpload.setVisibility(View.GONE);
 
                                         Toast.makeText(context, "Upload File " + filename + " Berhasil!", Toast.LENGTH_SHORT).show();
-                                        file.delete();
+                                        file.delete(); //delete compress file
                                     }
                                 });
                             }
